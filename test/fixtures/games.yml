@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  condition_id: 1
+  user_id: 1
+  origin: 1
+  destination: 1
+  current_loc_lat: 1.5
+  current_loc_lon: 1.5
+  travel_mode: 1
+  departure_time: 2016-11-27 12:44:08
+  car_best_opt: MyText
+  bike_best_opt: MyText
+  metro_best_opt: MyText
+
+two:
+  condition_id: 1
+  user_id: 1
+  origin: 1
+  destination: 1
+  current_loc_lat: 1.5
+  current_loc_lon: 1.5
+  travel_mode: 1
+  departure_time: 2016-11-27 12:44:08
+  car_best_opt: MyText
+  bike_best_opt: MyText
+  metro_best_opt: MyText
