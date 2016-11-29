@@ -32,10 +32,18 @@ class GamesController < ApplicationController
   # POST /games
   def create
     @game = Game.new(game_params)
-    puts current_user.id
+    puts @game.inspect
     @game.user_id=current_user.id
     if @game.save
-      render json: @game, status: :created, location: @game
+      
+        ActiveRecord::Base.connection.execute(
+        "INSERT INTO games_hist (id,condition_id,user_id,origin,destination,current_loc_lat, current_loc_lon,travel_mode,departure_time,car_best_opt,
+        bike_best_opt,metro_best_opt,created_at,updated_at) VALUES (#{@game.id},#{@game.condition_id},#{@game.user_id},
+        #{@game.origin},#{@game.destination},#{@game.current_loc_lat},#{@game.current_loc_lon},#{@game.travel_mode},
+        '#{@game.departure_time}','#{@game.car_best_opt}','#{@game.bike_best_opt}','#{@game.metro_best_opt}',current_timestamp(),current_timestamp() )"
+)
+        
+        render json: @game, status: :created, location: @game
     else
       render json: @game.errors, status: :unprocessable_entity
     end
@@ -44,6 +52,13 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   def update
     if @game.update(game_params)
+       ActiveRecord::Base.connection.execute(
+        "INSERT INTO games_hist (id,condition_id,user_id,origin,destination,current_loc_lat, current_loc_lon,travel_mode,departure_time,car_best_opt,
+        bike_best_opt,metro_best_opt,created_at,updated_at) VALUES (#{@game.id},#{@game.condition_id},#{@game.user_id},
+        #{@game.origin},#{@game.destination},#{@game.current_loc_lat},#{@game.current_loc_lon},#{@game.travel_mode},
+        '#{@game.departure_time}','#{@game.car_best_opt}','#{@game.bike_best_opt}','#{@game.metro_best_opt}',current_timestamp(),current_timestamp() )"
+)
+
       render json: @game
     else
       render json: @game.errors, status: :unprocessable_entity
